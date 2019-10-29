@@ -12,22 +12,21 @@ var serveStatic = require('serve-static')
 // Create parent app
 var app = express();
 
-
 // Create separate apps for subdomains
 var tomatoApp = express();
 tomatoApp.use(serveStatic(path.join(__dirname, '../tomato')))
 var potatoApp = express();
 potatoApp.use(serveStatic(path.join(__dirname, '../potato')))
 
-// //Create the virtual hosts
+// Create the virtual hosts
 var potatoHost = vhost("potato.localhost", potatoApp);
 var tomatoHost = vhost("tomato.localhost", tomatoApp);
 
-//Use the virtual hosts
+// Use the virtual hosts
 app.use(potatoHost);
 app.use(tomatoHost);
 
-//Start server
+// Start server
 var port = 8000;
 app.listen( port, function() {
     console.log( 'Express server listening on port %d in %s mode', port, app.settings.env );
